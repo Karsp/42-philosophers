@@ -21,6 +21,7 @@
 # include <sys/time.h>
 
 typedef pthread_mutex_t	t_mutex;
+typedef struct timeval	t_time;
 
 typedef struct s_data
 {
