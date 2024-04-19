@@ -11,27 +11,66 @@
 /* ************************************************************************** */
 #include "../include/philo.h"
 
-t_data	*init_env(int argc, char *argv)
+int	make_forks(t_data **p_env)
+{
+	int	i;
+
+	i = 0;
+	(*p_env)->forks =(t_mutex *) malloc((*p_env)->params[NOP] * sizeof(t_mutex));
+	if (!(*p_env)->forks)
+		return (ft_perror("Malloc error"), 1);
+	while (i < (*p_env)->params[NOP])
+	{
+		if (pthread_mutex_init((*p_env)->forks + i, NULL))
+			return (ft_perror("Mutex init error"), 2);
+		i++;
+	}
+	return (0);
+}
+
+t_data	*init_env(int argc, char **argv)
 {
 	t_data	*p_env;
 
+	(void)argc;
 	p_env = malloc(sizeof(t_data));
 	if (!p_env)
-		return (ft_perror("Malloc error"));
-	p_env->params = malloc(5 * sizeof(long));
+		return (ft_perror("Malloc error"), NULL);
+	p_env->params = malloc(6 * sizeof(long));
 	if (!p_env->params)
-		return (ft_perror("Malloc error"));
+		return (ft_perror("Malloc error"), NULL); //free everything?
 	fill_params(&p_env, argv);
+	p_env->mtx_print = malloc(sizeof(t_mutex));
+	if (!p_env->mtx_print)
+		return (ft_perror("Malloc error"), NULL); //free everything
+	if (pthread_mutex_init(p_env->mtx_print, NULL))
+		return (ft_perror("Mutex init error"), NULL); //free everything
+	if (make_forks(&p_env->forks))
+		return (ft_perror("Forks init error"), NULL); //free everything
 	p_env->start = get_time();
 	return (p_env);
 }
 
+void	fill_params(t_data **p_env, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		(*p_env)->params[i] = ft_atol((const char*)argv[i]);
+		i++;
+	}
+	if (i == 5)
+		(*p_env)->params[i] = -1;
+}
+
 long	get_time()
 {
-	t_time	*time;
+	t_time	time;
 	long	res;
 
 	gettimeofday(&time, NULL);
-	res = (time->tv_sec * 1000) + (time->tv_usec * 1000);
+	res = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (res);
 }

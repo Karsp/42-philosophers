@@ -25,7 +25,7 @@ COLOR_BLUE_N = \033[1;34m
 COLOR_PURPLE = \033[0;35m
 COLOR_PURPLE_N = \033[1;35m
 
-NAME = minishell
+NAME = philo
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall #-g3 -fsanitize=address 
 CFLAGS += -O3
@@ -45,45 +45,43 @@ CHARS := 0
 progress := 4
 
 all: $(NAME)
-        @if [ "$(CHANGES_MADE)" -eq "0" ]; then \
-                echo "$(COLOR_RED)No hay cambios para hacer. $(COLOR_RESET)"; \
-        fi
-        $(call print_progress)
-        $(eval progress := 50)
-        $(call print_progress)
-        $(eval progress := 100)
-        $(call print_progress)
-        @echo ""
+		@if [ "$(CHANGES_MADE)" -eq "0" ]; then \
+				echo "$(COLOR_RED)No hay cambios para hacer. $(COLOR_RESET)"; \
+		fi
+		$(call print_progress)
+		$(eval progress := 50)
+		$(call print_progress)
+		$(eval progress := 100)
+		$(call print_progress)
+		@echo ""
 
 $(NAME):$(OBJ) $(LIBFT) $(INCLUDE)
-        @$(CC) $(CFLAGS) $(OBJ) $(LDFLAG) $(LIBFT) -o $(NAME)
-        @$(eval CHANGES_MADE=1)
+		@$(CC) $(CFLAGS) $(OBJ) $(LDFLAG) $(LIBFT) -o $(NAME)
+		@$(eval CHANGES_MADE=1)
 
 $(LIBFT):
-        @make -C $(LIBFT_DIR) > /dev/null
+		@make -C $(LIBFT_DIR) > /dev/null
 
 define print_progress
-        @printf "\r$(COLOR_GREEN)[$(COLOR_GREEN_N) %d%%%*.*s $(COLOR_GREEN)] $(COLOR_PURPLE_N)Minishell $(COLOR_PURPLE)Compiling 🛠️$(COLOR_RESET)" $(progress) $(CHARS_LEN) $(CHARS)
+		@printf "\r$(COLOR_GREEN)[$(COLOR_GREEN_N) %d%%%*.*s $(COLOR_GREEN)] $(COLOR_PURPLE_N)Minishell $(COLOR_PURPLE)Compiling 🛠️$(COLOR_RESET)" $(progress) $(CHARS_LEN) $(CHARS)
 endef
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-        @mkdir -p $(dir $@)
-        @$(CC) $(CFLAGS) -c -o $@ $<
-        $(eval progress=$(shell echo $$(($(progress) + 1))))
-        $(call print_progress)
+		@mkdir -p $(dir $@)
+		@$(CC) $(CFLAGS) -c -o $@ $<
+		$(eval progress=$(shell echo $$(($(progress) + 1))))
+		$(call print_progress)
 # @echo "$(COLOR_BLUE) Created! 😸 $(COLOR_RESET)"
 
 clean:
-        @rm -rf $(OBJ_DIR) $(LIBFT) > /dev/null
-        @make clean -C $(LIBFT_DIR) > /dev/null
+		@rm -rf $(OBJ_DIR)  > /dev/null
 
 fclean: clean
-        @rm -f $(NAME)
-        @make fclean -C $(LIBFT_DIR) > /dev/null
-        @echo "$(COLOR_RED_N) Cleaned all! 🧹 $(COLOR_RESET)"
+		@rm -f $(NAME)
+		@echo "$(COLOR_RED_N) Cleaned all! 🧹 $(COLOR_RESET)"
 
 normi:
-        norminette
+		norminette
 
 re: fclean all
 

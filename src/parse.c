@@ -11,21 +11,35 @@
 /* ************************************************************************** */
 #include "../include/philo.h"
 
-int	check_args(char *argv)
+int	check_args(char **argv)
 {
-	int	nb;
+	long	nb;
 	int	i;
+	int	j;
 
 	i = 0;
 	while (argv[i])
 	{
-		nb = ft_atol(argv[i]);
-		if (nb == NULL || nb < 0)
+	        j = -1;
+		while (argv[i][++j])
+                        if (!ft_isdigit(argv[i][j]))
+                                return (1);
+                nb = ft_atol((const char*)argv[i]);
+		if (nb == '\0' || nb < 0)
 			return (1);
 		argv++;
 	}
 	return (0);
 }
+
+int     ft_isdigit(int c)
+{
+        if (c >= '0' && c <= '9')
+                return (1);
+        else
+                return (0);
+}
+
 long    ft_atol(const char *str)
 {
         int             c;
