@@ -19,8 +19,8 @@ int main(int argc, char **argv)
 	{
 		if (check_args(++argv))
 			return (ft_perror("Arg error"), 1);
-		p_env = init_env(argc, argv);
-		init_philos(&p_env);
+		p_env = env_init(argc, argv);
+		philos_init(&p_env);
 	}
 	else
 		return (ft_perror("Arg error"), 1);

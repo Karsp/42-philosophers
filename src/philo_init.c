@@ -30,7 +30,7 @@ t_philo	*make_philo(t_data ***p_env, int i)
 	return (philo);
 }
 
-void    init_philos(t_data **p_env)
+void    philos_init(t_data **p_env)
 {
 	t_philo **philos;
 	int     i;

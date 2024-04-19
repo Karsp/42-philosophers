@@ -28,7 +28,7 @@ int	make_forks(t_data **p_env)
 	return (0);
 }
 
-t_data	*init_env(int argc, char **argv)
+t_data	*env_init(int argc, char **argv)
 {
 	t_data	*p_env;
 

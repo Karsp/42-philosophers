@@ -55,7 +55,7 @@ typedef struct s_philo
 
 //env_init.c
 long	get_time();
-t_data	*init_env(int argc, char **argv);
+t_data	*env_init(int argc, char **argv);
 void	fill_params(t_data **p_env, char **argv);
 //parse.c
 int	check_args(char **argv);
