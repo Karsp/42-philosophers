@@ -21,11 +21,14 @@ t_philo	*make_philo(t_data ***p_env, int i)
 	if (!philo)
 		return (ft_perror("Malloc error"), NULL);
 	philo->number = i + 1;
+	// printf("Number %d\n", philo->number);
 	philo->l_fork = &(**p_env)->forks[(i + nop -1) % nop];
+	// printf("Philo->l %p  p_env->forks[%d] %p\n", philo->l_fork, ((i + nop -1) % nop), &(**p_env)->forks[(i + nop -1) % nop]);
 	philo->r_fork = &(**p_env)->forks[i];
-	philo->params = &(**p_env)->params;
-	philo->p_env = &(**p_env);
-	philo->last_meal= get_time();
+	// printf("Philo->r %p  p_env->forks[%d] %p\n", philo->r_fork, (i), &(**p_env)->forks[i]);
+	philo->params = (**p_env)->params;
+	philo->p_env = (**p_env);
+	philo->last_meal= ft_get_time();
 	philo->meals = 0;
 	return (philo);
 }
@@ -41,6 +44,7 @@ void    philos_init(t_data **p_env)
 		return (ft_perror("Malloc error"));
 	while (i < (* p_env)->params[NOP])
 	{
+		printf("Philo %d\n", i);
 		philos[i] = make_philo(&p_env, i);
 		if (!philos[i])
 			return (ft_perror("Malloc error"));

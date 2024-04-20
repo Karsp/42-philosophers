@@ -56,9 +56,16 @@ typedef struct s_philo
 
 
 //env_init
-long	get_time();
+
 t_data	*env_init(int argc, char **argv);
 void	fill_params(t_data **p_env, char **argv);
+int	make_forks(t_data **p_env);
+
+long	ft_get_time();
+long	get_currenttime(long start);
+//philo_init
+void    philos_init(t_data **p_env);
+t_philo	*make_philo(t_data ***p_env, int i);
 //parse
 int	check_args(char **argv);
 long    ft_atol(const char *str);
@@ -66,14 +73,16 @@ int     ft_isdigit(int c);
 //clean_exit
 void    ft_perror(char *msg);
 void    ft_putstr_fd(char *s, int fd);
-//routine
+//routines
 void    *routine(void *arg);
-void	*check_death(t_philo *philo);
+void	*check_death(void *arg);
 int		check_end(t_philo *philo);
+//actions
 void	take_forks(t_philo	**philo);
 void	take_meal(t_philo	**philo);
 void	leave_forks(t_philo	**philo);
 void	print_msg(t_philo **philo, char *msg);
+void	take_nap(t_philo	**philo);
 
 
 #endif

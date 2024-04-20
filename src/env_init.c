@@ -50,9 +50,10 @@ t_data	*env_init(int argc, char **argv)
 		return (ft_perror("Malloc error"), NULL); //free everything
 	if (pthread_mutex_init(p_env->end_mtx, NULL))
 		return (ft_perror("Mutex init error"), NULL); //free everything
-	if (make_forks(&p_env->forks))
+	if (make_forks(&p_env))
 		return (ft_perror("Forks init error"), NULL); //free everything
-	p_env->start = get_time();
+	p_env->start = ft_get_time();
+	printf("NOW: %ld\n", p_env->start);
 	return (p_env);
 }
 
@@ -69,10 +70,15 @@ void	fill_params(t_data **p_env, char **argv)
 	if (i == 5)
 		(*p_env)->params[i] = -1;
 }
-
-long	get_time()
+long	get_currenttime(long start)
 {
-	t_time	time;
+	return (ft_get_time() - start);
+}
+
+long	ft_get_time()
+{
+	// struct t_time	time;
+	struct timeval	time;
 	long	res;
 
 	gettimeofday(&time, NULL);
