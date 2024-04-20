@@ -40,10 +40,15 @@ t_data	*env_init(int argc, char **argv)
 	if (!p_env->params)
 		return (ft_perror("Malloc error"), NULL); //free everything?
 	fill_params(&p_env, argv);
-	p_env->mtx_print = malloc(sizeof(t_mutex));
-	if (!p_env->mtx_print)
+	p_env->print_mtx = malloc(sizeof(t_mutex));
+	if (!p_env->print_mtx)
 		return (ft_perror("Malloc error"), NULL); //free everything
-	if (pthread_mutex_init(p_env->mtx_print, NULL))
+	if (pthread_mutex_init(p_env->print_mtx, NULL))
+		return (ft_perror("Mutex init error"), NULL); //free everything
+	p_env->end_mtx = malloc(sizeof(t_mutex));
+	if (!p_env->end_mtx)
+		return (ft_perror("Malloc error"), NULL); //free everything
+	if (pthread_mutex_init(p_env->end_mtx, NULL))
 		return (ft_perror("Mutex init error"), NULL); //free everything
 	if (make_forks(&p_env->forks))
 		return (ft_perror("Forks init error"), NULL); //free everything

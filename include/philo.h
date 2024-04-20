@@ -36,7 +36,9 @@ typedef struct s_data
 	long    *params;
 	t_mutex	*forks;
 	t_philo **philo_list;
-	t_mutex	*mtx_print;
+	t_mutex	*print_mtx;
+	t_mutex	*end_mtx;
+	// t_mutex	*meals_mtx;
 	long	end;
 }   t_data;
 
@@ -53,16 +55,25 @@ typedef struct s_philo
 }   t_philo;
 
 
-//env_init.c
+//env_init
 long	get_time();
 t_data	*env_init(int argc, char **argv);
 void	fill_params(t_data **p_env, char **argv);
-//parse.c
+//parse
 int	check_args(char **argv);
 long    ft_atol(const char *str);
 int     ft_isdigit(int c);
-//clean_exit.c
-void    ft_perror(char *msj);
+//clean_exit
+void    ft_perror(char *msg);
 void    ft_putstr_fd(char *s, int fd);
+//routine
+void    *routine(void *arg);
+void	*check_death(t_philo *philo);
+int		check_end(t_philo *philo);
+void	take_forks(t_philo	**philo);
+void	take_meal(t_philo	**philo);
+void	leave_forks(t_philo	**philo);
+void	print_msg(t_philo **philo, char *msg);
+
 
 #endif

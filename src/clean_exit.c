@@ -12,9 +12,9 @@
 #include "../include/philo.h"
 
 /*@brief Used to return error message and free everything before exit*/
-void    ft_perror(char *msj)
+void    ft_perror(char *msg)
 {
-        ft_putstr_fd(msj, 2);
+        ft_putstr_fd(msg, 2);
         ft_putstr_fd("\n", 2);
         // ft_clearenv((**sack));
 }
@@ -31,11 +31,11 @@ void    ft_putstr_fd(char *s, int fd)
         }
 }
 
-// void    perror_free_exit(char *msj, t_shell_sack ***sack)
+// void    perror_free_exit(char *msg, t_shell_sack ***sack)
 // {
 //         int     exitcode;
 
-//         perror(msj);
+//         perror(msg);
 //         exitcode = (**sack)->last_exit;
 //         ft_clearenv((**sack));
 //         free_sack(&(**sack));
