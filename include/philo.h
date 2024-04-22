@@ -21,7 +21,7 @@
 # include <sys/time.h>
 
 typedef pthread_mutex_t	t_mutex;
-typedef struct timeval	t_time;
+// typedef struct timeval	t_time;
 typedef struct s_philo	t_philo;
 
 # define NOP 0
@@ -32,14 +32,15 @@ typedef struct s_philo	t_philo;
 
 typedef struct s_data
 {
-	long    start;
-	long    *params;
-	t_mutex	*forks;
-	t_philo **philo_list;
-	t_mutex	*print_mtx;
-	t_mutex	*end_mtx;
-	// t_mutex	*meals_mtx;
-	long	end;
+	long    		start;
+	long    		*params;
+	t_mutex			*forks;
+	t_philo 		**philo_list;
+	t_mutex			*print_mtx;
+	t_mutex			*end_mtx;
+	// t_mutex		*meals_mtx;
+	pthread_attr_t	det_attr;
+	long			end;
 }   t_data;
 
 typedef struct s_philo
@@ -57,12 +58,13 @@ typedef struct s_philo
 
 //env_init
 
-t_data	*env_init(int argc, char **argv);
+t_data	*env_init(char **argv);
 void	fill_params(t_data **p_env, char **argv);
 int	make_forks(t_data **p_env);
-
+//time_utils
 long	ft_get_time();
 long	get_currenttime(long start);
+void	ft_usleep(long wait);
 //philo_init
 void    philos_init(t_data **p_env);
 t_philo	*make_philo(t_data ***p_env, int i);
@@ -78,11 +80,11 @@ void    *routine(void *arg);
 void	*check_death(void *arg);
 int		check_end(t_philo *philo);
 //actions
-void	take_forks(t_philo	**philo);
+int		take_forks(t_philo	**philo);
 void	take_meal(t_philo	**philo);
 void	leave_forks(t_philo	**philo);
 void	print_msg(t_philo **philo, char *msg);
-void	take_nap(t_philo	**philo);
+int		take_nap(t_philo	**philo);
 
 
 #endif

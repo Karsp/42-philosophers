@@ -47,20 +47,18 @@ void    *routine(void *arg)
 	philo = (t_philo *)arg;
 	philo->last_meal = ft_get_time();
 	if ((philo->number % 2) == 0)
-		usleep(20);
-	while (!philo->p_env->end)
+		ft_usleep(100);
+	while (1)
 	{
-		// if (check_end(philo))
-		// 	break ;
-		// printf("TIME: %ld\n", ft_get_time());
-		take_forks(&philo);
+		if (take_forks(&philo))
+			return (NULL);
+		if (check_end(philo))
+			break ;
 		take_meal(&philo);
 		leave_forks(&philo);
-		take_nap(&philo);
-		// if (check_end(philo))
-		// 	return (NULL);
-		// usleep(10);
-		// printf("END %ld\n", philo->p_env->end);
+		if (take_nap(&philo))
+			return (NULL);
+		usleep(10);
 	}
 	return (NULL);
 }

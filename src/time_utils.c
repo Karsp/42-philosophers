@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daviles- <daviles-@student.madrid42.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 20:26:03 by daviles-          #+#    #+#             */
-/*   Updated: 2024/04/16 20:26:06 by daviles-         ###   ########.fr       */
+/*   Created: 2024/04/22 12:52:20 by daviles-          #+#    #+#             */
+/*   Updated: 2024/04/22 12:52:23 by daviles-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/philo.h"
 
-int main(int argc, char **argv)
+long	get_currenttime(long start)
 {
-	t_data	*p_env;
-	
-	if (argc >= 5 && argc <= 6)
-	{
-		if (check_args(++argv))
-			return (ft_perror("Arg error"), 1);
-		p_env = env_init(argv);
-		philos_init(&p_env);
-	}
-	else
-		return (ft_perror("Arg error"), 1);
-	pthread_exit(0);
-	return (0);
+	return (ft_get_time() - start);
+}
+
+void	ft_usleep(long wait)
+{
+	long	start;
+
+	start = ft_get_time();
+	while (42)
+    {
+        if (ft_get_time() - start < wait)
+            break ;
+		usleep(40);
+    }
+}
+
+long	ft_get_time()
+{
+	// struct t_time	time;
+	struct timeval	time;
+	long	res;
+
+	gettimeofday(&time, NULL);
+	res = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (res);
 }

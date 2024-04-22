@@ -21,11 +21,8 @@ t_philo	*make_philo(t_data ***p_env, int i)
 	if (!philo)
 		return (ft_perror("Malloc error"), NULL);
 	philo->number = i + 1;
-	// printf("Number %d\n", philo->number);
 	philo->l_fork = &(**p_env)->forks[(i + nop -1) % nop];
-	// printf("Philo->l %p  p_env->forks[%d] %p\n", philo->l_fork, ((i + nop -1) % nop), &(**p_env)->forks[(i + nop -1) % nop]);
 	philo->r_fork = &(**p_env)->forks[i];
-	// printf("Philo->r %p  p_env->forks[%d] %p\n", philo->r_fork, (i), &(**p_env)->forks[i]);
 	philo->params = (**p_env)->params;
 	philo->p_env = (**p_env);
 	philo->last_meal= ft_get_time();
@@ -37,21 +34,22 @@ void    philos_init(t_data **p_env)
 {
 	t_philo **philos;
 	int     i;
-
+	
 	i = 0;
 	philos = malloc((*p_env)->params[NOP] * sizeof(t_philo *));
 	if (!philos)
 		return (ft_perror("Malloc error"));
+	pthread_attr_init(&(*p_env)->det_attr);
+	pthread_attr_setdetachstate(&(*p_env)->det_attr, PTHREAD_CREATE_DETACHED);
 	while (i < (* p_env)->params[NOP])
 	{
-		printf("Philo %d\n", i);
 		philos[i] = make_philo(&p_env, i);
 		if (!philos[i])
 			return (ft_perror("Malloc error"));
-		if (pthread_create(&philos[i]->tid, NULL, &routine, philos[i]))
+		if (pthread_create(&philos[i]->tid, &(*p_env)->det_attr, &routine, philos[i]))
 			return (ft_perror("Thread error"));
-
 		i++;
 	}
 	(*p_env)->philo_list = philos;
+
 }

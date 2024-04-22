@@ -21,10 +21,16 @@ void	print_msg(t_philo **philo, char *msg)
 	pthread_mutex_unlock((* philo)->p_env->print_mtx);
 
 }
-void	take_nap(t_philo	**philo)
+int	take_nap(t_philo	**philo)
 {
+	if (check_end(*philo))
+		return (1);
     print_msg(&(*philo), " is sleeping");
-    usleep((* philo)->params[TTS]);
+    ft_usleep((*philo)->params[TTS]);
+    print_msg(&(*philo), " is thinking");
+	if (check_end(*philo))
+		return (1);
+	return (0);
 }
 
 void	leave_forks(t_philo	**philo)
@@ -38,26 +44,16 @@ void	leave_forks(t_philo	**philo)
 
 void	take_meal(t_philo	**philo)
 {
-    int i = 0;
-	// (* philo)->last_meal = ft_get_time();
 	print_msg(&(*philo), " is eating");
-    while (ft_get_time() <= ((* philo)->last_meal + (* philo)->params[TTE]))
-	{
-        printf("I %d\n", ++i);
-        printf("GET TIME %ld\n",ft_get_time());
-        printf("Current TIME %ld\n",get_currenttime((* philo)->p_env->start));
-	    printf("%ld endtime\n", ((* philo)->last_meal + (* philo)->params[TTE]));
-
-		// usleep(10);
-	}
-    
-    printf("AQUI\n");
+	ft_usleep((* philo)->params[TTE]);
 	(* philo)->meals += 1;
 	(* philo)->last_meal = ft_get_time();
 }
 
-void	take_forks(t_philo	**philo)
+int	take_forks(t_philo	**philo)
 {
+	if (check_end(*philo))
+		return (1);
 	pthread_mutex_lock((* philo)->l_fork);
 	print_msg(&(*philo), " has taken a fork");
 	if ((* philo)->params[NOP] == 1)
@@ -66,9 +62,9 @@ void	take_forks(t_philo	**philo)
 		pthread_mutex_lock((* philo)->p_env->end_mtx);
 		(* philo)->p_env->end = 1;
 		pthread_mutex_unlock((* philo)->p_env->end_mtx);
-		return ;
+		return (1);
 	}
 	pthread_mutex_lock((* philo)->r_fork);
 	print_msg(&(*philo), "has taken a fork");
-
+	return (0);
 }

@@ -31,6 +31,14 @@ void    ft_putstr_fd(char *s, int fd)
         }
 }
 
+void    free_destroy(t_philo    **philo)
+{
+        (void)philo;
+        // pthread_mutex_destroy(data->mtx_print);
+        // pthread_attr_destroy(&(*philo->p_env->det_attr));
+
+}
+
 // void    perror_free_exit(char *msg, t_shell_sack ***sack)
 // {
 //         int     exitcode;

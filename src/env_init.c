@@ -28,11 +28,10 @@ int	make_forks(t_data **p_env)
 	return (0);
 }
 
-t_data	*env_init(int argc, char **argv)
+t_data	*env_init(char **argv)
 {
 	t_data	*p_env;
 
-	(void)argc;
 	p_env = malloc(sizeof(t_data));
 	if (!p_env)
 		return (ft_perror("Malloc error"), NULL);
@@ -53,7 +52,6 @@ t_data	*env_init(int argc, char **argv)
 	if (make_forks(&p_env))
 		return (ft_perror("Forks init error"), NULL); //free everything
 	p_env->start = ft_get_time();
-	printf("NOW: %ld\n", p_env->start);
 	return (p_env);
 }
 
@@ -69,19 +67,4 @@ void	fill_params(t_data **p_env, char **argv)
 	}
 	if (i == 5)
 		(*p_env)->params[i] = -1;
-}
-long	get_currenttime(long start)
-{
-	return (ft_get_time() - start);
-}
-
-long	ft_get_time()
-{
-	// struct t_time	time;
-	struct timeval	time;
-	long	res;
-
-	gettimeofday(&time, NULL);
-	res = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	return (res);
 }
