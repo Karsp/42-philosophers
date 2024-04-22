@@ -11,23 +11,58 @@
 /* ************************************************************************** */
 #include "../include/philo.h"
 
-void	*check_death(void *arg)
+// void	*check_meals(void *arg)
+// {
+// 	t_philo	*p;
+// 	p = arg;
+
+// 	while (!p->p_env->end)
+// 	{
+// 		if (ft_get_time() <= (p->last_meal + p->params[TTD]))
+// 			{
+// 			print_msg(&p, " died");
+// 			pthread_mutex_lock(p->p_env->end_mtx);
+// 			p->p_env->end = 1;
+// 			pthread_mutex_unlock(p->p_env->end_mtx);
+// 		}
+// 		usleep(10);
+// 	}
+// 	return (NULL);
+// }
+
+int	init_checkers(t_data **p_env)
 {
 	t_philo	*p;
-	p = arg;
+	int		i;
+	int		meals;
 
-	while (!p->p_env->end)
+	while (!(*p_env)->end)
 	{
-		if (ft_get_time() <= (p->last_meal + p->params[TTD]))
+		i = -1;
+		meals = 0;
+		while (++i < p->params[NOP])
+		{
+			p = (*p_env)->philo_list[i];
+			// printf("i %d\n", i);
+			// printf("ME %ld\n", p->last_meal);
+			// printf("LM %ld\n", (p->last_meal + p->params[TTD]));
+
+			if (ft_get_time() <= (p->last_meal + p->params[TTD]))
 			{
-			print_msg(&p, " died");
-			pthread_mutex_lock(p->p_env->end_mtx);
-			p->p_env->end = 1;
-			pthread_mutex_unlock(p->p_env->end_mtx);
+				set_print_end(&p, 2);
+				return (2);
+			}
+			if (p->params[TME] != -1 && p->meals >= p->params[TME])
+				meals++;
+		}
+		if (meals == p->params[NOP])
+		{
+			set_print_end(&p, 1);
+			return (1);
 		}
 		usleep(10);
 	}
-	return (NULL);
+	return (2);
 }
 
 int	check_end(t_philo *philo)
@@ -44,6 +79,7 @@ void    *routine(void *arg)
 {
 	t_philo	*philo;
 
+	// sleep(2);
 	philo = (t_philo *)arg;
 	philo->last_meal = ft_get_time();
 	if ((philo->number % 2) == 0)
@@ -52,11 +88,12 @@ void    *routine(void *arg)
 	{
 		if (take_forks(&philo))
 			return (NULL);
+		// printf("AQUI\n");
 		if (check_end(philo))
 			break ;
 		take_meal(&philo);
 		leave_forks(&philo);
-		if (take_nap(&philo))
+		if (take_nap_think(&philo))
 			return (NULL);
 		usleep(10);
 	}

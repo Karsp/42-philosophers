@@ -28,7 +28,7 @@ typedef struct s_philo	t_philo;
 # define TTD 1
 # define TTE 2
 # define TTS 3
-# define TME 4
+# define TME 4 //Times Must Eat
 
 typedef struct s_data
 {
@@ -77,14 +77,15 @@ void    ft_perror(char *msg);
 void    ft_putstr_fd(char *s, int fd);
 //routines
 void    *routine(void *arg);
-void	*check_death(void *arg);
 int		check_end(t_philo *philo);
+int		init_checkers(t_data **p_env);
 //actions
 int		take_forks(t_philo	**philo);
 void	take_meal(t_philo	**philo);
 void	leave_forks(t_philo	**philo);
+int		take_nap_think(t_philo	**philo);
+//print_utils
 void	print_msg(t_philo **philo, char *msg);
-int		take_nap(t_philo	**philo);
-
+void	set_print_end(t_philo **philo, int state);
 
 #endif

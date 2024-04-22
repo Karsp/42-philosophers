@@ -21,6 +21,12 @@ int main(int argc, char **argv)
 			return (ft_perror("Arg error"), 1);
 		p_env = env_init(argv);
 		philos_init(&p_env);
+		// if (p_env->params[TME] != -1)
+		// 	check_meals(&p_env);
+		usleep(150);
+		// sleep(1); // delay a bit to check segfault
+		//create a thread for checker?
+		init_checkers(&p_env);
 	}
 	else
 		return (ft_perror("Arg error"), 1);
