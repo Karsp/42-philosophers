@@ -13,13 +13,13 @@
 
 int	take_nap_think(t_philo	**philo)
 {
-	if (check_end(*philo))
-		return (1);
+	// if (check_end(*philo))
+	// 	return (1);
     print_msg(philo, "is sleeping");
     ft_usleep((*philo)->params[TTS]);
     print_msg(philo, "is thinking");
-	if (check_end(*philo))
-		return (1);
+	// if (check_end(*philo))
+	// 	return (1);
 	return (0);
 }
 
@@ -42,8 +42,8 @@ void	take_meal(t_philo	**philo)
 
 int	take_forks(t_philo	**philo)
 {
-	if (check_end(*philo))
-		return (1);
+	// if (check_end(*philo))
+	// 	return (1);
 	pthread_mutex_lock((* philo)->l_fork);
 	print_msg(philo, "has taken a fork");
 	if ((* philo)->params[NOP] == 1)

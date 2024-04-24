@@ -31,7 +31,6 @@ void	ft_usleep(long wait)
 
 long	ft_get_time()
 {
-	// struct t_time	time;
 	struct timeval	time;
 	long	res;
 
