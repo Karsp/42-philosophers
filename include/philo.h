@@ -78,7 +78,7 @@ void    ft_putstr_fd(char *s, int fd);
 //routines
 void    *routine(void *arg);
 int		check_end(t_philo *philo);
-int		init_checkers(t_data **p_env);
+void	*init_checkers(void *arg);
 //actions
 int		take_forks(t_philo	**philo);
 void	take_meal(t_philo	**philo);
@@ -86,6 +86,6 @@ void	leave_forks(t_philo	**philo);
 int		take_nap_think(t_philo	**philo);
 //print_utils
 void	print_msg(t_philo **philo, char *msg);
-void	set_print_end(t_philo **philo, int state);
+void	set_print_end(t_philo *philo, int state);
 
 #endif

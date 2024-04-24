@@ -11,20 +11,24 @@
 /* ************************************************************************** */
 #include "../include/philo.h"
 
-void	set_print_end(t_philo **philo, int state)
+void	set_print_end(t_philo *philo, int state)
 {
-	pthread_mutex_lock((*philo)->p_env->end_mtx);
-	(*philo)->p_env->end = 1;
-	pthread_mutex_unlock((*philo)->p_env->end_mtx);	
+	pthread_mutex_lock(philo->p_env->end_mtx);
+	philo->p_env->end = 1;
+	pthread_mutex_unlock(philo->p_env->end_mtx);	
 	if (state == 1)
 	{
-		pthread_mutex_lock((* philo)->p_env->print_mtx);
-		printf("%ld ms\tAll have eaten %ld times.\nEnding simulation.\n", get_currenttime((* philo)->p_env->start), (* philo)->params[TME]);
-		pthread_mutex_unlock((* philo)->p_env->print_mtx);
+		pthread_mutex_lock(philo->p_env->print_mtx);
+		printf("%ld ms\tAll have eaten %ld times.\nEnding simulation.\n",
+				get_currenttime(philo->p_env->start), philo->params[TME]);
+		// pthread_mutex_unlock(philo->p_env->print_mtx);
 
 	}
 	else
-		print_msg(philo, " died");
+	{
+		pthread_mutex_lock(philo->p_env->print_mtx);
+		printf("%ld ms\t%d %s \n", get_currenttime(philo->p_env->start), philo->number, "died");
+	}
 }
 
 void	print_msg(t_philo **philo, char *msg)

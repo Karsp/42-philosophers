@@ -30,39 +30,44 @@
 // 	return (NULL);
 // }
 
-int	init_checkers(t_data **p_env)
+void	*init_checkers(void *arg)
 {
 	t_philo	*p;
+	t_data	*p_env;
 	int		i;
 	int		meals;
 
-	while (!(*p_env)->end)
+	p_env = (t_data *)arg;
+			p = p_env->philo_list[0];
+
+	while (42)
 	{
 		i = -1;
 		meals = 0;
-		while (++i < p->params[NOP])
+		while (++i < p_env->params[NOP])
 		{
-			p = (*p_env)->philo_list[i];
-			// printf("i %d\n", i);
+			// printf("AQUI\n");
+			p = p_env->philo_list[i];
 			// printf("ME %ld\n", p->last_meal);
-			// printf("LM %ld\n", (p->last_meal + p->params[TTD]));
-
-			if (ft_get_time() <= (p->last_meal + p->params[TTD]))
+			// printf("LM %ld\n", p->last_meal);
+			// printf("NOW %ld  DEATH %ld\n", ft_get_time(), (p->last_meal + p->params[TTD]));
+			if (ft_get_time() >= (p->last_meal + p->params[TTD]))
 			{
-				set_print_end(&p, 2);
-				return (2);
+				set_print_end(&p[i], 2);
+				return (NULL);
 			}
 			if (p->params[TME] != -1 && p->meals >= p->params[TME])
 				meals++;
+			// printf("Meals %d\n", meals);
 		}
-		if (meals == p->params[NOP])
+		if (meals == p->params[TME])
 		{
-			set_print_end(&p, 1);
-			return (1);
+			set_print_end(&p[0], 1);
+			return (NULL);
 		}
 		usleep(10);
 	}
-	return (2);
+	return (NULL);
 }
 
 int	check_end(t_philo *philo)
@@ -79,23 +84,21 @@ void    *routine(void *arg)
 {
 	t_philo	*philo;
 
-	// sleep(2);
 	philo = (t_philo *)arg;
-	philo->last_meal = ft_get_time();
+	// philo->last_meal = ft_get_time();
 	if ((philo->number % 2) == 0)
-		ft_usleep(100);
+		usleep(100);
 	while (1)
 	{
 		if (take_forks(&philo))
 			return (NULL);
-		// printf("AQUI\n");
 		if (check_end(philo))
 			break ;
 		take_meal(&philo);
 		leave_forks(&philo);
 		if (take_nap_think(&philo))
 			return (NULL);
-		usleep(10);
+		usleep(100);
 	}
 	return (NULL);
 }

@@ -14,22 +14,24 @@
 int main(int argc, char **argv)
 {
 	t_data	*p_env;
-	
+	pthread_t	checker;
+
 	if (argc >= 5 && argc <= 6)
 	{
 		if (check_args(++argv))
 			return (ft_perror("Arg error"), 1);
 		p_env = env_init(argv);
 		philos_init(&p_env);
-		// if (p_env->params[TME] != -1)
-		// 	check_meals(&p_env);
-		usleep(150);
-		// sleep(1); // delay a bit to check segfault
-		//create a thread for checker?
-		init_checkers(&p_env);
+		 usleep(50);
+		checker = malloc (sizeof(pthread_t));
+		if (!checker)
+			return (ft_perror("Malloc error"), 1);
+		if (pthread_create(&checker, NULL, &init_checkers, p_env))
+			return (ft_perror("Thread create error"), 2);
+		if (pthread_join(checker, NULL))
+			return (ft_perror("Thread join error"), 2);
 	}
 	else
 		return (ft_perror("Arg error"), 1);
-	pthread_exit(0);
 	return (0);
 }
