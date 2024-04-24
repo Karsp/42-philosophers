@@ -48,7 +48,7 @@ int	take_forks(t_philo	**philo)
 	print_msg(philo, "has taken a fork");
 	if ((* philo)->params[NOP] == 1)
 	{
-		print_msg(philo, "died");
+		// print_msg(philo, "died");
 		pthread_mutex_lock((* philo)->p_env->end_mtx);
 		(* philo)->p_env->end = 1;
 		pthread_mutex_unlock((* philo)->p_env->end_mtx);

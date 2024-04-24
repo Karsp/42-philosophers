@@ -31,12 +31,15 @@ void	set_print_end(t_philo *philo, int state)
 	}
 }
 
-void	print_msg(t_philo **philo, char *msg)
+void	 print_msg(t_philo **philo, char *msg)
 {
 	int	nop;
+	long	current_time;
 
+	current_time = get_currenttime((* philo)->p_env->start);
 	nop = (* philo)->number;
 	pthread_mutex_lock((* philo)->p_env->print_mtx);
-	printf("%ld ms\t%d %s \n", get_currenttime((* philo)->p_env->start), nop, msg);
+	printf("%ld ms\t%d %s \n", current_time, nop, msg);
+	// printf("%ld ms\t%d %s \n", get_currenttime((* philo)->p_env->start), nop, msg);
 	pthread_mutex_unlock((* philo)->p_env->print_mtx);
 }
