@@ -30,6 +30,15 @@ void    ft_putstr_fd(char *s, int fd)
                 i++;
         }
 }
+void    clean_exit(t_data **p_env)
+{
+        // int     i;
+
+        // i = 0;
+
+        free (p_env);
+}
+
 
 void    free_destroy(t_philo    **philo)
 {

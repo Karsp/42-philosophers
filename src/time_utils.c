@@ -23,7 +23,7 @@ void	ft_usleep(long wait)
 	start = ft_get_time();
 	while (42)
     {
-        if (ft_get_time() - start < wait)
+        if (ft_get_time() - start > wait)
             break ;
 		usleep(40);
     }

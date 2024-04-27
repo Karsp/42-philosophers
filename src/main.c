@@ -23,13 +23,14 @@ int main(int argc, char **argv)
 		p_env = env_init(argv);
 		philos_init(&p_env);
 		 usleep(50);
-		checker = malloc (sizeof(pthread_t));
+		checker = (pthread_t)malloc (sizeof(pthread_t));
 		if (!checker)
 			return (ft_perror("Malloc error"), 1);
 		if (pthread_create(&checker, NULL, &init_checkers, p_env))
 			return (ft_perror("Thread create error"), 2);
 		if (pthread_join(checker, NULL))
 			return (ft_perror("Thread join error"), 2);
+		// clean_exit(&p_env);
 	}
 	else
 		return (ft_perror("Arg error"), 1);

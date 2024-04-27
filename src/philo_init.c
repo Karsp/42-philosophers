@@ -46,7 +46,7 @@ void    philos_init(t_data **p_env)
 		philos[i] = make_philo(&p_env, i);
 		if (!philos[i])
 			return (ft_perror("Malloc error"));
-		if (pthread_create(&philos[i]->tid, &(*p_env)->det_attr, &routine, philos[i]))
+		if (pthread_create(&(philos[i]->tid), NULL, &routine, philos[i]))
 			return (ft_perror("Thread error"));
 		i++;
 	}

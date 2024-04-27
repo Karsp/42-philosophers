@@ -75,6 +75,7 @@ int     ft_isdigit(int c);
 //clean_exit
 void    ft_perror(char *msg);
 void    ft_putstr_fd(char *s, int fd);
+void    clean_exit(t_data **p_env);
 //routines
 void    *routine(void *arg);
 int		check_end(t_philo *philo);
@@ -86,6 +87,6 @@ void	leave_forks(t_philo	**philo);
 int		take_nap_think(t_philo	**philo);
 //print_utils
 void	print_msg(t_philo **philo, char *msg);
-void	set_print_end(t_philo *philo, int state);
+void	set_print_end(t_philo *philo, t_data **p_env, int state);
 
 #endif
