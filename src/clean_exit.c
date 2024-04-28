@@ -39,7 +39,8 @@ void    clean_exit(t_data **p_env)
 	i = 0;
 	while (i < (* p_env)->params[NOP])
 	{
-		p = ((* p_env)->philo_list[i]);
+		p = (* p_env)->philo_list[i];
+		printf("I %d, philo %d\n", i, (* p_env)->philo_list[i]->number);
 		pthread_join(p->tid, NULL);
 		free(p);
 		i++;
@@ -48,7 +49,7 @@ void    clean_exit(t_data **p_env)
 
 	free_mutexdestroy(&p_env);
 	free((*p_env)->params);
-	free (p_env);
+	free ((*p_env));
 }
 
 void    free_mutexdestroy(t_data ***p_env)
@@ -57,10 +58,7 @@ void    free_mutexdestroy(t_data ***p_env)
 
 	i = -1;
 	while (++i < (**p_env)->params[NOP])
-	{
 		pthread_mutex_destroy(&(**p_env)->forks[i]);
-		free(&(**p_env)->forks[i]);
-	}
 	pthread_mutex_destroy((**p_env)->print_mtx);
 	free((**p_env)->print_mtx);
 	pthread_mutex_destroy((**p_env)->end_mtx);

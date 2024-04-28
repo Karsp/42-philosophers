@@ -29,9 +29,10 @@ void	*init_checkers(void *arg)
 			p = p_env->philo_list[i];
 			if (ft_get_time() >= (p->last_meal + p->params[TTD]))
 				return (set_print_end(p, &p_env, 2), NULL);
-			printf("TME %ld\n", p->params[TME]);
+			pthread_mutex_lock((p_env)->end_mtx);
 			if (p->params[TME] != -1 && p->meals >= p->params[TME])
 				meals++;
+			pthread_mutex_unlock((p_env)->end_mtx);
 		}
 		if (meals == p->params[NOP])
 			return (set_print_end(&p[0], &p_env, 1), NULL);
@@ -64,9 +65,11 @@ void    *routine(void *arg)
 		if (take_forks(&philo))
 			return (NULL);
 		if (check_end(philo))
-			return (NULL);
+			return (leave_forks(&philo), NULL);
 		take_meal(&philo);
 		leave_forks(&philo);
+		if (check_end(philo))
+			return (NULL);
 		if (take_nap_think(&philo))
 			return (NULL);
 		// usleep(100);

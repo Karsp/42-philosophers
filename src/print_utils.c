@@ -16,19 +16,20 @@
 		pthread_mutex_lock((*p_env)->end_mtx);
 		(*p_env)->end = 1;
 		pthread_mutex_unlock((*p_env)->end_mtx);	
+		ft_usleep(100);
 		if (state == 1)
 		{
 			pthread_mutex_lock((*p_env)->print_mtx);
 			printf("%ld ms\tAll have eaten %ld times.\nEnding simulation.\n",
 					get_currenttime((*p_env)->start), philo->params[TME]);
-			// pthread_mutex_unlock((*p_env)->print_mtx);
+			pthread_mutex_unlock((*p_env)->print_mtx);
 
 		}
 		else
 		{
 			pthread_mutex_lock((*p_env)->print_mtx);
 			printf("%ld ms\t%d %s \n", get_currenttime((*p_env)->start), philo->number, "died");
-			// pthread_mutex_unlock((*p_env)->print_mtx);
+			pthread_mutex_unlock((*p_env)->print_mtx);
 		}
 	}
 

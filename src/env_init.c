@@ -65,6 +65,6 @@ void	fill_params(t_data **p_env, char **argv)
 		(*p_env)->params[i] = ft_atol((const char*)argv[i]);
 		i++;
 	}
-	if (i == 5)
+	if (i == 4)
 		(*p_env)->params[i] = -1;
 }

@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 			return (ft_perror("Thread create error"), 2);
 		if (pthread_join(checker, NULL))
 			return (ft_perror("Thread join error"), 2);
-		// clean_exit(&p_env);
+		clean_exit(&p_env);
 		
 	}
 	else
