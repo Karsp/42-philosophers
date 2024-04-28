@@ -36,18 +36,18 @@
 	void	 print_msg(t_philo **philo, char *msg)
 	{
 		int		nop;
-		// int		end;
+		int		end;
 		long	current_time;
 
 		current_time = get_currenttime((* philo)->p_env->start);
 		nop = (* philo)->number;
-		// end = 0;
-		// pthread_mutex_lock((* philo)->p_env->end_mtx);
-		// end = (*philo)->p_env->end;
-		// pthread_mutex_unlock((* philo)->p_env->end_mtx);
+		end = 0;
+		pthread_mutex_lock((* philo)->p_env->end_mtx);
+		end = (*philo)->p_env->end;
+		pthread_mutex_unlock((* philo)->p_env->end_mtx);
 
 		pthread_mutex_lock((* philo)->p_env->print_mtx);
-		// if (!end)
-		printf("%ld ms\t%d %s \n", current_time, nop, msg);
+		if (!end)
+			printf("%ld ms\t%d %s \n", current_time, nop, msg);
 		pthread_mutex_unlock((* philo)->p_env->print_mtx);
 	}

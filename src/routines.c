@@ -36,7 +36,7 @@ void	*init_checkers(void *arg)
 		}
 		if (meals == p->params[NOP])
 			return (set_print_end(&p[0], &p_env, 1), NULL);
-		usleep(100);
+		// usleep(100);
 	}
 	return (NULL);
 }
@@ -59,7 +59,7 @@ void    *routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if ((philo->number % 2) == 0)
-		usleep(150);
+		ft_usleep(100);
 	while (!philo->p_env->end)
 	{
 		if (take_forks(&philo))

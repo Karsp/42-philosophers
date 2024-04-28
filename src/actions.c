@@ -38,8 +38,8 @@ void	take_meal(t_philo	**philo)
 	ft_usleep((* philo)->params[TTE]);
 	pthread_mutex_lock((* philo)->p_env->end_mtx);
 	(* philo)->meals += 1;
-	pthread_mutex_unlock((* philo)->p_env->end_mtx);
 	(* philo)->last_meal = ft_get_time();
+	pthread_mutex_unlock((* philo)->p_env->end_mtx);
 }
 
 int	take_forks(t_philo	**philo)
