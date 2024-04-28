@@ -28,18 +28,25 @@
 		{
 			pthread_mutex_lock((*p_env)->print_mtx);
 			printf("%ld ms\t%d %s \n", get_currenttime((*p_env)->start), philo->number, "died");
+			// pthread_mutex_unlock((*p_env)->print_mtx);
 		}
 	}
 
 	void	 print_msg(t_philo **philo, char *msg)
 	{
-		int	nop;
+		int		nop;
+		// int		end;
 		long	current_time;
 
 		current_time = get_currenttime((* philo)->p_env->start);
 		nop = (* philo)->number;
+		// end = 0;
+		// pthread_mutex_lock((* philo)->p_env->end_mtx);
+		// end = (*philo)->p_env->end;
+		// pthread_mutex_unlock((* philo)->p_env->end_mtx);
+
 		pthread_mutex_lock((* philo)->p_env->print_mtx);
+		// if (!end)
 		printf("%ld ms\t%d %s \n", current_time, nop, msg);
-		// printf("%ld ms\t%d %s \n", get_currenttime((* philo)->p_env->start), nop, msg);
 		pthread_mutex_unlock((* philo)->p_env->print_mtx);
 	}

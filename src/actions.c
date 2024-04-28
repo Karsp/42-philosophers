@@ -26,9 +26,9 @@ int	take_nap_think(t_philo	**philo)
 void	leave_forks(t_philo	**philo)
 {
 	pthread_mutex_unlock((* philo)->l_fork);
-	print_msg(philo, "has leave a fork");
+	// print_msg(philo, "has leave a fork");
 	pthread_mutex_unlock((* philo)->r_fork);
-	print_msg(philo, "has leave a fork");
+	// print_msg(philo, "has leave a fork");
 
 }
 
@@ -36,9 +36,9 @@ void	take_meal(t_philo	**philo)
 {
 	print_msg(philo, "is eating");
 	ft_usleep((* philo)->params[TTE]);
-	pthread_mutex_lock((* philo)->p_env->print_mtx);
+	pthread_mutex_lock((* philo)->p_env->end_mtx);
 	(* philo)->meals += 1;
-	pthread_mutex_unlock((* philo)->p_env->print_mtx);
+	pthread_mutex_unlock((* philo)->p_env->end_mtx);
 	(* philo)->last_meal = ft_get_time();
 }
 

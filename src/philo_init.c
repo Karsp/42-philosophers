@@ -39,8 +39,8 @@ void    philos_init(t_data **p_env)
 	philos = malloc((*p_env)->params[NOP] * sizeof(t_philo *));
 	if (!philos)
 		return (ft_perror("Malloc error"));
-	pthread_attr_init(&(*p_env)->det_attr);
-	pthread_attr_setdetachstate(&(*p_env)->det_attr, PTHREAD_CREATE_DETACHED);
+	// pthread_attr_init(&(*p_env)->det_attr);
+	// pthread_attr_setdetachstate(&(*p_env)->det_attr, PTHREAD_CREATE_DETACHED);
 	while (i < (* p_env)->params[NOP])
 	{
 		philos[i] = make_philo(&p_env, i);

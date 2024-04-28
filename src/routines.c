@@ -29,15 +29,13 @@ void	*init_checkers(void *arg)
 			p = p_env->philo_list[i];
 			if (ft_get_time() >= (p->last_meal + p->params[TTD]))
 				return (set_print_end(p, &p_env, 2), NULL);
-			// pthread_mutex_lock(p_env->print_mtx);
-			// printf("Philo %d MEALS %ld\n\n", p->number, p->meals);
+			printf("TME %ld\n", p->params[TME]);
 			if (p->params[TME] != -1 && p->meals >= p->params[TME])
 				meals++;
-			// pthread_mutex_unlock(p_env->print_mtx);
 		}
-		if (meals == p->params[TME])
+		if (meals == p->params[NOP])
 			return (set_print_end(&p[0], &p_env, 1), NULL);
-		usleep(10);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -46,11 +44,11 @@ int	check_end(t_philo *philo)
 {
 	int	end;
 
-	pthread_mutex_lock(philo->p_env->print_mtx);
-	if (philo->params[TME] != -1 && philo->meals >= philo->params[TME])
-		philo->p_env->end = 1;
+	pthread_mutex_lock(philo->p_env->end_mtx);
+	// if (philo->params[TME] != -1 && philo->meals >= philo->params[TME])
+	// 	philo->p_env->end = 1;
 	end = philo->p_env->end;
-	pthread_mutex_unlock(philo->p_env->print_mtx);
+	pthread_mutex_unlock(philo->p_env->end_mtx);
 	return (end);
 }
 
@@ -65,13 +63,13 @@ void    *routine(void *arg)
 	{
 		if (take_forks(&philo))
 			return (NULL);
-		// if (check_end(philo))
-		// 	return (NULL);
+		if (check_end(philo))
+			return (NULL);
 		take_meal(&philo);
 		leave_forks(&philo);
 		if (take_nap_think(&philo))
 			return (NULL);
-		usleep(100);
+		// usleep(100);
 	}
 	return (NULL);
 }

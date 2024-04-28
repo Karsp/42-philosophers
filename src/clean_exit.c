@@ -14,47 +14,55 @@
 /*@brief Used to return error message and free everything before exit*/
 void    ft_perror(char *msg)
 {
-        ft_putstr_fd(msg, 2);
-        ft_putstr_fd("\n", 2);
-        // ft_clearenv((**sack));
+		ft_putstr_fd(msg, 2);
+		ft_putstr_fd("\n", 2);
 }
+
 void    ft_putstr_fd(char *s, int fd)
 {
-        int     i;
+		int     i;
 
-        i = 0;
-        while (s[i] != '\0')
-        {
-                if(write (fd, &s[i], 1) == -1)
-                        return ;
-                i++;
-        }
+		i = 0;
+		while (s[i] != '\0')
+		{
+				if(write (fd, &s[i], 1) == -1)
+						return ;
+				i++;
+		}
 }
+
 void    clean_exit(t_data **p_env)
 {
-        // int     i;
+	int     i;
+	t_philo *p;
 
-        // i = 0;
+	i = 0;
+	while (i < (* p_env)->params[NOP])
+	{
+		p = ((* p_env)->philo_list[i]);
+		pthread_join(p->tid, NULL);
+		free(p);
+		i++;
+	}
+	free((*p_env)->philo_list);
 
-        free (p_env);
+	free_mutexdestroy(&p_env);
+	free((*p_env)->params);
+	free (p_env);
 }
 
-
-void    free_destroy(t_philo    **philo)
+void    free_mutexdestroy(t_data ***p_env)
 {
-        (void)philo;
-        // pthread_mutex_destroy(data->mtx_print);
-        // pthread_attr_destroy(&(*philo->p_env->det_attr));
+	int	i;
 
+	i = -1;
+	while (++i < (**p_env)->params[NOP])
+	{
+		pthread_mutex_destroy(&(**p_env)->forks[i]);
+		free(&(**p_env)->forks[i]);
+	}
+	pthread_mutex_destroy((**p_env)->print_mtx);
+	free((**p_env)->print_mtx);
+	pthread_mutex_destroy((**p_env)->end_mtx);
+	free((**p_env)->end_mtx);
 }
-
-// void    perror_free_exit(char *msg, t_shell_sack ***sack)
-// {
-//         int     exitcode;
-
-//         perror(msg);
-//         exitcode = (**sack)->last_exit;
-//         ft_clearenv((**sack));
-//         free_sack(&(**sack));
-//         exit(exitcode);
-// }
