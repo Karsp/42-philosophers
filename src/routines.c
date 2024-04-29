@@ -17,6 +17,7 @@ void	*init_checkers(void *arg)
 	t_data	*p_env;
 	int		i;
 	int		meals;
+	// long		last_meal;
 
 	p_env = (t_data *)arg;
 	p = p_env->philo_list[0];
@@ -27,12 +28,17 @@ void	*init_checkers(void *arg)
 		while (++i < p_env->params[NOP])
 		{
 			p = p_env->philo_list[i];
+			// pthread_mutex_lock((p_env)->end_mtx);
+			// last_meal = p->last_meal + p->params[TTD];
+			// pthread_mutex_unlock((p_env)->end_mtx);
+			// if (ft_get_time() >= last_meal)
+			// 	return (set_print_end(p, &p_env, 2), NULL);
 			if (ft_get_time() >= (p->last_meal + p->params[TTD]))
 				return (set_print_end(p, &p_env, 2), NULL);
-			pthread_mutex_lock((p_env)->end_mtx);
+			// pthread_mutex_lock((p_env)->end_mtx);
 			if (p->params[TME] != -1 && p->meals >= p->params[TME])
 				meals++;
-			pthread_mutex_unlock((p_env)->end_mtx);
+			// pthread_mutex_unlock((p_env)->end_mtx);
 		}
 		if (meals == p->params[NOP])
 			return (set_print_end(&p[0], &p_env, 1), NULL);
@@ -59,7 +65,7 @@ void    *routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if ((philo->number % 2) == 0)
-		ft_usleep(100);
+		ft_usleep(150);
 	while (!philo->p_env->end)
 	{
 		if (take_forks(&philo))
