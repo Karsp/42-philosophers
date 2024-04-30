@@ -34,11 +34,9 @@ void	leave_forks(t_philo	**philo)
 
 void	take_meal(t_philo	**philo)
 {
-	(* philo)->last_meal = ft_get_time();
 	print_msg(philo, "is eating");
-	// pthread_mutex_lock((* philo)->p_env->end_mtx);
+	(* philo)->last_meal = ft_get_time();
 	(* philo)->meals += 1;
-	// pthread_mutex_unlock((* philo)->p_env->end_mtx);
 	ft_usleep((* philo)->params[TTE]);
 	// pthread_mutex_lock((* philo)->p_env->end_mtx);
 	// (* philo)->meals += 1;
@@ -53,9 +51,7 @@ int	take_forks(t_philo	**philo)
 
 	if ((* philo)->params[NOP] == 1)
 	{
-		pthread_mutex_lock((* philo)->p_env->end_mtx);
-		(* philo)->p_env->end = 1;
-		pthread_mutex_unlock((* philo)->p_env->end_mtx);
+		print_msg(philo, "has taken a fork");
 		return (1);
 	}
 	if ((*philo)->r_fork > (*philo)->l_fork)

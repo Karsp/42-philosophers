@@ -64,3 +64,27 @@ void    free_mutexdestroy(t_data ***p_env)
 	pthread_mutex_destroy((**p_env)->end_mtx);
 	free((**p_env)->end_mtx);
 }
+
+void    clean_mtx(t_data ***p_env, int m)
+{
+	int	i;
+
+	i = -1;
+	if (m >= 1)
+	{
+		pthread_mutex_destroy(&(**p_env)->print_mtx);
+		free(&(**p_env)->print_mtx);
+	}
+	if (m >= 2)
+	{
+		pthread_mutex_destroy(&(**p_env)->end_mtx);
+		free(&(**p_env)->end_mtx);
+	}
+	if (m >= 3)
+	{
+		while (++i < (**p_env)->params[NOP])
+			pthread_mutex_destroy(&(**p_env)->forks[i]);
+		free((**p_env)->forks);
+	}
+	free((**p_env));
+}

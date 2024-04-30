@@ -37,20 +37,20 @@ t_data	*env_init(char **argv)
 		return (ft_perror("Malloc error"), NULL);
 	p_env->params = malloc(6 * sizeof(long));
 	if (!p_env->params)
-		return (ft_perror("Malloc error"), NULL); //free everything?
+		return (ft_perror("Malloc error"), free(p_env), NULL);
 	fill_params(&p_env, argv);
 	p_env->print_mtx = malloc(sizeof(t_mutex));
 	if (!p_env->print_mtx)
-		return (ft_perror("Malloc error"), NULL); //free everything
+		return (ft_perror("Malloc error"), free(p_env), NULL);
 	if (pthread_mutex_init(p_env->print_mtx, NULL))
-		return (ft_perror("Mutex init error"), NULL); //free everything
+		return (ft_perror("Mutex init error"), free(p_env), NULL);
 	p_env->end_mtx = malloc(sizeof(t_mutex));
 	if (!p_env->end_mtx)
-		return (ft_perror("Malloc error"), NULL); //free everything
+		return (ft_perror("Malloc error"), free(p_env), NULL);
 	if (pthread_mutex_init(p_env->end_mtx, NULL))
-		return (ft_perror("Mutex init error"), NULL); //free everything
+		return (ft_perror("Mutex init error"), clean_mtx(&p_env, 1), NULL);
 	if (make_forks(&p_env))
-		return (ft_perror("Forks init error"), NULL); //free everything
+		return (ft_perror("Forks init error"), clean_mtx(&p_env, 2), NULL);
 	p_env->start = ft_get_time();
 	return (p_env);
 }

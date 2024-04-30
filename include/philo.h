@@ -77,6 +77,7 @@ void    ft_perror(char *msg);
 void    ft_putstr_fd(char *s, int fd);
 void    clean_exit(t_data **p_env);
 void    free_mutexdestroy(t_data ***p_env);
+void    clean_mtx(t_data ***p_env, int m);
 //routines
 void    *routine(void *arg);
 int		check_end(t_philo *philo);
