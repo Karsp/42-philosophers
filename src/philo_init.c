@@ -13,7 +13,7 @@
 
 t_philo	*make_philo(t_data ***p_env, int i)
 {
-	t_philo *philo;
+	t_philo	*philo;
 	int		nop;
 
 	nop = (**p_env)->params[NOP];
@@ -25,23 +25,21 @@ t_philo	*make_philo(t_data ***p_env, int i)
 	philo->r_fork = &(**p_env)->forks[i];
 	philo->params = (**p_env)->params;
 	philo->p_env = (**p_env);
-	philo->last_meal= ft_get_time();
+	philo->last_meal = ft_get_time();
 	philo->meals = 0;
 	return (philo);
 }
 
-void    philos_init(t_data **p_env)
+void	philos_init(t_data **p_env)
 {
-	t_philo **philos;
-	int     i;
-	
+	t_philo	**philos;
+	int		i;
+
 	i = 0;
 	philos = malloc((*p_env)->params[NOP] * sizeof(t_philo *));
 	if (!philos)
 		return (ft_perror("Malloc error"));
-	// pthread_attr_init(&(*p_env)->det_attr);
-	// pthread_attr_setdetachstate(&(*p_env)->det_attr, PTHREAD_CREATE_DETACHED);
-	while (i < (* p_env)->params[NOP])
+	while (i < (*p_env)->params[NOP])
 	{
 		philos[i] = make_philo(&p_env, i);
 		if (!philos[i])
@@ -51,5 +49,4 @@ void    philos_init(t_data **p_env)
 		i++;
 	}
 	(*p_env)->philo_list = philos;
-
 }

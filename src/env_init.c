@@ -16,7 +16,8 @@ int	make_forks(t_data **p_env)
 	int	i;
 
 	i = 0;
-	(*p_env)->forks =(t_mutex *) malloc((*p_env)->params[NOP] * sizeof(t_mutex));
+	(*p_env)->forks = (t_mutex *)
+		malloc((*p_env)->params[NOP] * sizeof(t_mutex));
 	if (!(*p_env)->forks)
 		return (ft_perror("Malloc error"), 1);
 	while (i < (*p_env)->params[NOP])
@@ -62,7 +63,7 @@ void	fill_params(t_data **p_env, char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		(*p_env)->params[i] = ft_atol((const char*)argv[i]);
+		(*p_env)->params[i] = ft_atol((const char *)argv[i]);
 		i++;
 	}
 	if (i == 4)

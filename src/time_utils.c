@@ -22,17 +22,17 @@ void	ft_usleep(long wait)
 
 	start = ft_get_time();
 	while (42)
-    {
-        if (ft_get_time() - start > wait)
-            break ;
+	{
+		if (ft_get_time() - start > wait)
+			break ;
 		usleep(40);
-    }
+	}
 }
 
-long	ft_get_time()
+long	ft_get_time(void)
 {
 	struct timeval	time;
-	long	res;
+	long			res;
 
 	gettimeofday(&time, NULL);
 	res = (time.tv_sec * 1000) + (time.tv_usec / 1000);

@@ -32,16 +32,15 @@ typedef struct s_philo	t_philo;
 
 typedef struct s_data
 {
-	long    		start;
-	long    		*params;
+	long			start;
+	long			*params;
 	t_mutex			*forks;
-	t_philo 		**philo_list;
+	t_philo			**philo_list;
 	t_mutex			*print_mtx;
 	t_mutex			*end_mtx;
-	// t_mutex		*meals_mtx;
 	pthread_attr_t	det_attr;
 	long			end;
-}   t_data;
+}	t_data;
 
 typedef struct s_philo
 {
@@ -53,33 +52,31 @@ typedef struct s_philo
 	long		last_meal;
 	long		meals;
 	t_data		*p_env;
-}   t_philo;
-
+}	t_philo;
 
 //env_init
-
 t_data	*env_init(char **argv);
 void	fill_params(t_data **p_env, char **argv);
-int	make_forks(t_data **p_env);
+int		make_forks(t_data **p_env);
 //time_utils
-long	ft_get_time();
+long	ft_get_time(void);
 long	get_currenttime(long start);
 void	ft_usleep(long wait);
 //philo_init
-void    philos_init(t_data **p_env);
+void	philos_init(t_data **p_env);
 t_philo	*make_philo(t_data ***p_env, int i);
 //parse
-int	check_args(char **argv);
-long    ft_atol(const char *str);
-int     ft_isdigit(int c);
+int		check_args(char **argv);
+long	ft_atol(const char *str);
+int		ft_isdigit(int c);
 //clean_exit
-void    ft_perror(char *msg);
-void    ft_putstr_fd(char *s, int fd);
-void    clean_exit(t_data **p_env);
-void    free_mutexdestroy(t_data ***p_env);
-void    clean_mtx(t_data ***p_env, int m);
+void	ft_perror(char *msg);
+void	ft_putstr_fd(char *s, int fd);
+void	clean_exit(t_data **p_env);
+void	free_mutexdestroy(t_data ***p_env);
+void	clean_mtx(t_data **p_env, int m);
 //routines
-void    *routine(void *arg);
+void	*routine(void *arg);
 int		check_end(t_philo *philo);
 void	*init_checkers(void *arg);
 //actions
