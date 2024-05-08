@@ -27,13 +27,30 @@ void	*init_checkers(void *arg)
 		while (++i < p_env->params[NOP])
 		{
 			p = p_env->philo_list[i];
+			pthread_mutex_lock(p_env->end_mtx);
 			if (ft_get_time() >= (p->last_meal + p->params[TTD]))
+			{
+
+				p_env->end = 1;
+			pthread_mutex_unlock(p_env->end_mtx);
 				return (set_print_end(p, &p_env, 2), NULL);
+			}
+			pthread_mutex_unlock(p_env->end_mtx);
+			pthread_mutex_lock(p_env->end_mtx);
 			if (p->params[TME] != -1 && p->meals >= p->params[TME])
+			{
+			// pthread_mutex_unlock(p_env->end_mtx);
 				meals++;
+			}
+			pthread_mutex_unlock(p_env->end_mtx);
 		}
 		if (meals == p->params[NOP])
+		{
+			pthread_mutex_lock(p_env->end_mtx);
+			p_env->end = 1;
+			pthread_mutex_unlock(p_env->end_mtx);
 			return (set_print_end(&p[0], &p_env, 1), NULL);
+		}
 	}
 	return (NULL);
 }
@@ -63,8 +80,6 @@ void	*routine(void *arg)
 			return (leave_forks(&philo), NULL);
 		take_meal(&philo);
 		leave_forks(&philo);
-		if (check_end(philo))
-			return (NULL);
 		if (take_nap_think(&philo))
 			return (NULL);
 	}
