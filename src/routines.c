@@ -16,7 +16,7 @@ int	check_death(t_philo **philo)
 	long	last_meal;
 
 	pthread_mutex_lock((*philo)->p_env->print_mtx);
-	last_meal = (*philo)->last_meal + 8;
+	last_meal = (*philo)->last_meal;
 	pthread_mutex_unlock((*philo)->p_env->print_mtx);
 	if (ft_get_time() >= (last_meal + (*philo)->params[TTD]))
 		return (1);
