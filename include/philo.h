@@ -37,7 +37,6 @@ typedef struct s_data
 	t_mutex			*forks;
 	t_philo			**philo_list;
 	t_mutex			*print_mtx;
-	t_mutex			*end_mtx;
 	pthread_attr_t	det_attr;
 	long			end;
 }	t_data;
@@ -75,7 +74,7 @@ void	ft_perror(char *msg);
 void	ft_putstr_fd(char *s, int fd);
 void	clean_exit(t_data **p_env);
 void	free_mutexdestroy(t_data ***p_env);
-void	clean_mtx(t_data **p_env, int m);
+void	clean_mtx(t_data **p_env);
 //routines
 void	*routine(void *arg);
 int		check_end(t_philo *philo, int *end);

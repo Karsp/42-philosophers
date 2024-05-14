@@ -27,7 +27,7 @@ COLOR_PURPLE_N = \033[1;35m
 
 NAME = philo
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall -fsanitize=thread -g -O1 #-g3 -fsanitize=address 
+CFLAGS = -Werror -Wextra -Wall -fsanitize=thread -g -O1 
 CFLAGS += -O3
 CFLAGS += -I inc
 LDFLAG = -pthread
