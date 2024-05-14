@@ -64,6 +64,7 @@ long	get_currenttime(long start);
 void	ft_usleep(long wait);
 //philo_init
 void	philos_init(t_data **p_env);
+void	philos_join(t_data **p_env, t_philo ***philos);
 t_philo	*make_philo(t_data ***p_env, int i);
 //parse
 int		check_args(char **argv);
@@ -77,8 +78,10 @@ void	free_mutexdestroy(t_data ***p_env);
 void	clean_mtx(t_data **p_env, int m);
 //routines
 void	*routine(void *arg);
-int		check_end(t_philo *philo);
+int		check_end(t_philo *philo, int *end);
 void	*init_checkers(void *arg);
+int		check_death(t_philo **philo);
+void	check_meals(t_philo **philo, int *meals);
 //actions
 int		take_forks(t_philo	**philo);
 void	take_meal(t_philo	**philo);

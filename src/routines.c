@@ -59,28 +59,28 @@ void	*init_checkers(void *arg)
 	return (NULL);
 }
 
-int	check_end(t_philo *philo)
+int	check_end(t_philo *philo, int *end)
 {
-	int	end;
-
 	pthread_mutex_lock(philo->p_env->end_mtx);
-	end = philo->p_env->end;
+	*end = philo->p_env->end;
 	pthread_mutex_unlock(philo->p_env->end_mtx);
-	return (end);
+	return (*end);
 }
 
 void	*routine(void *arg)
 {
 	t_philo	*philo;
+	int		end;
 
 	philo = (t_philo *)arg;
 	if ((philo->number % 2) == 0)
 		ft_usleep(150);
-	while (!philo->p_env->end)
+	end = 0;
+	while (!end)
 	{
 		if (take_forks(&philo))
 			return (NULL);
-		if (check_end(philo))
+		if (check_end(philo, &end))
 			return (leave_forks(&philo), NULL);
 		take_meal(&philo);
 		leave_forks(&philo);

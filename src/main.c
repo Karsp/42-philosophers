@@ -27,6 +27,7 @@ int	main(int argc, char **argv)
 			return (ft_perror("Malloc error"), clean_exit(&p_env), 1);
 		if (pthread_create(&checker, NULL, &init_checkers, p_env))
 			return (ft_perror("Thread create error"), clean_exit(&p_env), 2);
+		philos_join(&p_env, &(p_env->philo_list));
 		if (pthread_join(checker, NULL))
 			return (ft_perror("Thread join error"), clean_exit(&p_env), 2);
 		clean_exit(&p_env);

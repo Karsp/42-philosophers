@@ -40,7 +40,6 @@ void	clean_exit(t_data **p_env)
 	while (i < (*p_env)->params[NOP])
 	{
 		p = (*p_env)->philo_list[i];
-		pthread_join(p->tid, NULL);
 		free(p);
 		i++;
 	}
