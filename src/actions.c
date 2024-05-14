@@ -48,7 +48,7 @@ int	take_forks(t_philo	**philo)
 		print_msg(philo, "has taken a fork");
 		return (1);
 	}
-	if ((*philo)->number %2 == 0)
+	if ((*philo)->number % 2 == 0)
 	{
 		pthread_mutex_lock((*philo)->r_fork);
 		print_msg(philo, "has taken a fork");

@@ -13,9 +13,9 @@
 
 void	set_print_end(t_philo *philo, t_data **p_env, int state)
 {
-	// pthread_mutex_lock((*p_env)->end_mtx);
-	// (*p_env)->end = 1;
-	// pthread_mutex_unlock((*p_env)->end_mtx);
+	pthread_mutex_lock((*p_env)->end_mtx);
+	(*p_env)->end = 1;
+	pthread_mutex_unlock((*p_env)->end_mtx);
 	if (state == 1)
 	{
 		pthread_mutex_lock((*p_env)->print_mtx);
