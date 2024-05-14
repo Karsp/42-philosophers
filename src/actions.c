@@ -73,6 +73,9 @@ int	take_forks(t_philo	**philo)
 
 // int	take_forks(t_philo	**philo)
 // {
+// 	int	end;
+
+// 	end = 0;
 // 	if (check_end(*philo, &end))
 // 		return (1);
 // 	if ((*philo)->params[NOP] == 1)
