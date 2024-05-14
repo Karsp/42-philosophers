@@ -15,9 +15,9 @@ int	check_death(t_philo **philo)
 {
 	long	last_meal;
 
-	pthread_mutex_lock((*philo)->p_env->end_mtx);
-	last_meal = (*philo)->last_meal;
-	pthread_mutex_unlock((*philo)->p_env->end_mtx);
+	pthread_mutex_lock((*philo)->p_env->print_mtx);
+	last_meal = (*philo)->last_meal + 8;
+	pthread_mutex_unlock((*philo)->p_env->print_mtx);
 	if (ft_get_time() >= (last_meal + (*philo)->params[TTD]))
 		return (1);
 	return (0);
@@ -25,12 +25,12 @@ int	check_death(t_philo **philo)
 
 void	check_meals(t_philo **philo, int *meals)
 {
-	pthread_mutex_lock((*philo)->p_env->end_mtx);
+	pthread_mutex_lock((*philo)->p_env->print_mtx);
 	if ((*philo)->params[TME] != -1 && (*philo)->meals >= (*philo)->params[TME])
 	{
 		*meals = *meals + 1;
 	}
-	pthread_mutex_unlock((*philo)->p_env->end_mtx);
+	pthread_mutex_unlock((*philo)->p_env->print_mtx);
 }
 
 void	*init_checkers(void *arg)
@@ -61,9 +61,9 @@ void	*init_checkers(void *arg)
 
 int	check_end(t_philo *philo, int *end)
 {
-	pthread_mutex_lock(philo->p_env->end_mtx);
+	pthread_mutex_lock(philo->p_env->print_mtx);
 	*end = philo->p_env->end;
-	pthread_mutex_unlock(philo->p_env->end_mtx);
+	pthread_mutex_unlock(philo->p_env->print_mtx);
 	return (*end);
 }
 
