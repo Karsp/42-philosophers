@@ -30,6 +30,19 @@ t_philo	*make_philo(t_data ***p_env, int i)
 	return (philo);
 }
 
+void	philos_join(t_data **p_env, t_philo ***philos, int i)
+{
+	i = 0;
+	while (i < (*p_env)->params[NOP])
+	{
+		if (pthread_join(((*philos)[i]->tid), NULL))
+		{
+			return (ft_perror("Join thread error"));
+		}
+		i++;
+	}
+}
+
 void	philos_init(t_data **p_env)
 {
 	t_philo	**philos;
@@ -48,5 +61,6 @@ void	philos_init(t_data **p_env)
 			return (ft_perror("Thread error"));
 		i++;
 	}
+	philos_join(p_env, &philos, i);
 	(*p_env)->philo_list = philos;
 }
