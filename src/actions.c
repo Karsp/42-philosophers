@@ -52,16 +52,45 @@ int	take_forks(t_philo	**philo)
 	if ((*philo)->number % 2 == 0)
 	{
 		pthread_mutex_lock((*philo)->r_fork);
+		// printf("R Fork %d   -", (*philo)->number -1);
 		print_msg(philo, "has taken a fork");
 		pthread_mutex_lock((*philo)->l_fork);
+		// printf("L Fork %ld   -", ((*philo)->number ) % (*philo)->params[NOP]);
 		print_msg(philo, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock((*philo)->l_fork);
+		// printf("L Fork %ld   -", ((*philo)->number ) % (*philo)->params[NOP]);
 		print_msg(philo, "has taken a fork");
 		pthread_mutex_lock((*philo)->r_fork);
+		// printf("R Fork %d   -", (*philo)->number -1) ;
 		print_msg(philo, "has taken a fork");
 	}
 	return (0);
 }
+// int	take_forks(t_philo	**philo)
+// {
+// 	if (check_end(*philo))
+// 		return (1);
+// 	if ((*philo)->params[NOP] == 1)
+// 	{
+// 		print_msg(philo, "has taken a fork");
+// 		return (1);
+// 	}
+// 	if ((*philo)->r_fork > (*philo)->l_fork)
+// 	{
+// 		pthread_mutex_lock((*philo)->r_fork);
+// 		print_msg(philo, "has taken a fork");
+// 		pthread_mutex_lock((*philo)->l_fork);
+// 		print_msg(philo, "has taken a fork");
+// 	}
+// 	else
+// 	{
+// 		pthread_mutex_lock((*philo)->l_fork);
+// 		print_msg(philo, "has taken a fork");
+// 		pthread_mutex_lock((*philo)->r_fork);
+// 		print_msg(philo, "has taken a fork");
+// 	}
+// 	return (0);
+// }
