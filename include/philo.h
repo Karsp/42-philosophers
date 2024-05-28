@@ -28,7 +28,13 @@ typedef struct s_philo	t_philo;
 # define TTD 1
 # define TTE 2
 # define TTS 3
-# define TME 4 //Times Must Eat
+# define TME 4
+
+# define FORK "\x1b[1;33mhas taken a fork\x1b[0m"
+# define EAT "\x1b[1;32mis eating\x1b[0m"
+# define SLEEP "\x1b[1;34mis sleeping\x1b[0m"
+# define THINK "\x1b[1;35mis thinking\x1b[0m"
+# define DIED "died\x1b[0m"
 
 typedef struct s_data
 {

@@ -18,11 +18,11 @@ int	take_nap_think(t_philo	**philo)
 	end = 0;
 	if (check_end(*philo, &end))
 		return (1);
-	print_msg(philo, "is sleeping");
+	print_msg(philo, SLEEP);
 	ft_usleep((*philo)->params[TTS]);
 	if (check_end(*philo, &end))
 		return (1);
-	print_msg(philo, "is thinking");
+	print_msg(philo, THINK);
 	return (0);
 }
 
@@ -34,7 +34,7 @@ void	leave_forks(t_philo	**philo)
 
 void	take_meal(t_philo	**philo)
 {
-	print_msg(philo, "is eating");
+	print_msg(philo, EAT);
 	pthread_mutex_lock((*philo)->p_env->print_mtx);
 	(*philo)->last_meal = ft_get_time();
 	(*philo)->meals += 1;
@@ -46,51 +46,22 @@ int	take_forks(t_philo	**philo)
 {
 	if ((*philo)->params[NOP] == 1)
 	{
-		print_msg(philo, "has taken a fork");
+		print_msg(philo, FORK);
 		return (1);
 	}
 	if ((*philo)->number % 2 == 0)
 	{
 		pthread_mutex_lock((*philo)->r_fork);
-		// printf("R Fork %d   -", (*philo)->number -1);
-		print_msg(philo, "has taken a fork");
+		print_msg(philo, FORK);
 		pthread_mutex_lock((*philo)->l_fork);
-		// printf("L Fork %ld   -", ((*philo)->number ) % (*philo)->params[NOP]);
-		print_msg(philo, "has taken a fork");
+		print_msg(philo, FORK);
 	}
 	else
 	{
 		pthread_mutex_lock((*philo)->l_fork);
-		// printf("L Fork %ld   -", ((*philo)->number ) % (*philo)->params[NOP]);
-		print_msg(philo, "has taken a fork");
+		print_msg(philo, FORK);
 		pthread_mutex_lock((*philo)->r_fork);
-		// printf("R Fork %d   -", (*philo)->number -1) ;
-		print_msg(philo, "has taken a fork");
+		print_msg(philo, FORK);
 	}
 	return (0);
 }
-// int	take_forks(t_philo	**philo)
-// {
-// 	if (check_end(*philo))
-// 		return (1);
-// 	if ((*philo)->params[NOP] == 1)
-// 	{
-// 		print_msg(philo, "has taken a fork");
-// 		return (1);
-// 	}
-// 	if ((*philo)->r_fork > (*philo)->l_fork)
-// 	{
-// 		pthread_mutex_lock((*philo)->r_fork);
-// 		print_msg(philo, "has taken a fork");
-// 		pthread_mutex_lock((*philo)->l_fork);
-// 		print_msg(philo, "has taken a fork");
-// 	}
-// 	else
-// 	{
-// 		pthread_mutex_lock((*philo)->l_fork);
-// 		print_msg(philo, "has taken a fork");
-// 		pthread_mutex_lock((*philo)->r_fork);
-// 		print_msg(philo, "has taken a fork");
-// 	}
-// 	return (0);
-// }
