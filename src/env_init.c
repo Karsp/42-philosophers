@@ -38,14 +38,14 @@ int	init_mutex(t_data *p_env)
 		return (ft_perror("Mutex init error"), free(p_env), 1);
 	p_env->end_mtx = malloc(sizeof(t_mutex));
 	if (!p_env->end_mtx)
-		return (ft_perror("Malloc error"), free(p_env), 1);
+		return (ft_perror("Malloc error"), clean_mtx(&p_env, 1), 1);
 	if (pthread_mutex_init(p_env->end_mtx, NULL))
 		return (ft_perror("Mutex init error"), clean_mtx(&p_env, 1), 1);
 	p_env->alt_mtx = malloc(sizeof(t_mutex));
 	if (!p_env->alt_mtx)
-		return (ft_perror("Malloc error"), free(p_env), 1);
+		return (ft_perror("Malloc error"), clean_mtx(&p_env, 2), 1);
 	if (pthread_mutex_init(p_env->alt_mtx, NULL))
-		return (ft_perror("Mutex init error"), clean_mtx(&p_env, 1), 1);
+		return (ft_perror("Mutex init error"), clean_mtx(&p_env, 2), 1);
 	return (0);
 }
 
