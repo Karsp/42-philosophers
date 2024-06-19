@@ -43,6 +43,7 @@ typedef struct s_data
 	t_mutex			*forks;
 	t_philo			**philo_list;
 	t_mutex			*print_mtx;
+	t_mutex			*alt_mtx;
 	pthread_attr_t	det_attr;
 	long			end;
 }	t_data;
@@ -89,6 +90,7 @@ int		check_death(t_philo **philo);
 void	check_meals(t_philo **philo, int *meals);
 //actions
 int		take_forks(t_philo	**philo);
+int		take_forks_three(t_philo	**philo);
 void	take_meal(t_philo	**philo);
 void	leave_forks(t_philo	**philo);
 int		take_nap_think(t_philo	**philo);

@@ -49,6 +49,11 @@ int	take_forks(t_philo	**philo)
 		print_msg(philo, FORK);
 		return (1);
 	}
+	else if ((*philo)->params[NOP] == 3)
+	{
+		take_forks_three(&(*philo));
+		return (0);
+	}
 	if ((*philo)->number % 2 == 0)
 	{
 		pthread_mutex_lock((*philo)->r_fork);
@@ -61,6 +66,29 @@ int	take_forks(t_philo	**philo)
 		pthread_mutex_lock((*philo)->l_fork);
 		print_msg(philo, FORK);
 		pthread_mutex_lock((*philo)->r_fork);
+		print_msg(philo, FORK);
+	}
+	return (0);
+}
+
+int	take_forks_three(t_philo	**philo)
+{
+	if ((*philo)->number % 2 == 0)
+	{
+		pthread_mutex_lock((*philo)->p_env->alt_mtx);
+		pthread_mutex_lock((*philo)->r_fork);
+		print_msg(philo, FORK);
+		pthread_mutex_lock((*philo)->l_fork);
+		pthread_mutex_unlock((*philo)->p_env->alt_mtx);
+		print_msg(philo, FORK);
+	}
+	else
+	{
+		pthread_mutex_lock((*philo)->p_env->alt_mtx);
+		pthread_mutex_lock((*philo)->l_fork);
+		print_msg(philo, FORK);
+		pthread_mutex_lock((*philo)->r_fork);
+		pthread_mutex_unlock((*philo)->p_env->alt_mtx);
 		print_msg(philo, FORK);
 	}
 	return (0);
