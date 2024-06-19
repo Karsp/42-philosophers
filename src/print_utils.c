@@ -27,7 +27,7 @@ void	set_print_end(t_philo *philo, t_data **p_env, int state)
 	{
 		pthread_mutex_lock((*p_env)->print_mtx);
 		printf("%ld ms\t%d %s \n", get_currenttime((*p_env)->start),
-			philo->number, "died");
+			philo->number, DIED);
 		pthread_mutex_unlock((*p_env)->print_mtx);
 	}
 }

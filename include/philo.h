@@ -30,6 +30,12 @@ typedef struct s_philo	t_philo;
 # define TTS 3
 # define TME 4 //Times Must Eat
 
+# define FORK "\x1b[1;33mhas taken a fork\x1b[0m"
+# define EAT "\x1b[1;32mis eating\x1b[0m"
+# define SLEEP "\x1b[1;34mis sleeping\x1b[0m"
+# define THINK "\x1b[1;35mis thinking\x1b[0m"
+# define DIED "died\x1b[0m"
+
 typedef struct s_data
 {
 	long			start;
@@ -38,6 +44,7 @@ typedef struct s_data
 	t_philo			**philo_list;
 	t_mutex			*print_mtx;
 	t_mutex			*end_mtx;
+	t_mutex			*alt_mtx;
 	pthread_attr_t	det_attr;
 	long			end;
 }	t_data;
@@ -58,6 +65,7 @@ typedef struct s_philo
 t_data	*env_init(char **argv);
 void	fill_params(t_data **p_env, char **argv);
 int		make_forks(t_data **p_env);
+int		init_mutex(t_data *p_env);
 //time_utils
 long	ft_get_time(void);
 long	get_currenttime(long start);
@@ -84,6 +92,7 @@ int		check_death(t_philo **philo);
 void	check_meals(t_philo **philo, int *meals);
 //actions
 int		take_forks(t_philo	**philo);
+int		take_forks_three(t_philo	**philo);
 void	take_meal(t_philo	**philo);
 void	leave_forks(t_philo	**philo);
 int		take_nap_think(t_philo	**philo);
